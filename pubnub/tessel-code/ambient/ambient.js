@@ -1,3 +1,27 @@
+ function publish() {
+
+  pubnub = PUBNUB.init({
+     publish_key   : 'demo',
+     subscribe_key : 'demo'
+  });
+
+  // pubnub.subscribe({
+  //    channel : "surprise_party",
+  //    message : function(message,envelope,channel){
+  //      console.log('message', 'envelope', 'channel');
+  //    },
+  //    connect: pub
+  // });
+
+  function pub() {
+    pubnub.publish({
+      channel : "surprise_party",
+      message : "Hello SURPRISE!!!",
+      callback: function(publishCallbackResponse){ console.log(publishCallbackResponse) }
+    });
+  }
+ };
+
 // Any copyright is dedicated to the Public Domain.
 // http://creativecommons.org/publicdomain/zero/1.0/
 
@@ -6,7 +30,7 @@ This ambient module example console.logs
 ambient light and sound levels and whenever a
 specified light or sound level trigger is met.
 *********************************************/
-
+var pubnub = require("pubnub-hackathon").init({publish_key: "demo", subscribe_key: "demo" });
 var tessel = require('tessel');
 var ambientlib = require('ambient-attx4');
 
@@ -23,6 +47,13 @@ ambient.on('ready', function () {
     });
   })}, 500); // The readings will happen every .5 seconds unless the trigger is hit
 
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ambient.setLightTrigger(0.5);
 
   // Set a light level trigger
