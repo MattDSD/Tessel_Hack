@@ -11,6 +11,10 @@ out jack.
 
 var tessel = require('tessel');
 var audio = require('audio-vs1053b').use(tessel.port['A']);
+var fs = require('fs');
+var audioFileChill = 'Gorillaz-Rhinestone Eyes.mp3';
+var audioFileParty = '09 Not Exactly.mp3';
+
 
 var chunks = [];
 
@@ -51,6 +55,39 @@ function stopRecording() {
     });
   });
 }
+
+/*********************************************
+This Audio Module demo sets volume, then plays
+an audio file out over Headphones/Line out
+*********************************************/
+
+
+
+
+
+
+// Wait for the module to connect
+audio.on('ready', function() {
+  console.log("Audio module connected! Setting volume...");
+  // Set the volume in decibels. Around 20 is good; smaller is louder.
+  audio.setVolume(20, function(err) {
+    if (err) {
+      return console.log(err);
+    }
+    // Get the song
+    console.log('Retrieving file...');
+    var song = fs.readFileSync(audioFile);
+    // Play the song
+    console.log('Playing ' + audioFileChill + '...');
+    audio.play(song, function(err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Done playing', audioFileChill);
+      }
+    });
+  });
+});
 
 
 // If there is an error, report it
